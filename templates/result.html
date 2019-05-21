@@ -31,7 +31,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
     <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">Sense Fashion</a>
+      <a class="navbar-brand js-scroll-trigger" href="{{ url_for('index') }}">Sense Fashion</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -78,15 +78,13 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 text-center">
-          <form action="/index" method="POST" enctype="multipart/form-data">
-            <input class="btn btn-light btn-xl js-scroll-trigger" type="file" name="pic" accept="image/*">
-            <br>
-            <hr class="divider light my-4">
-            <input class="btn btn-light btn-xl js-scroll-trigger" type="submit" value="Submit">
-          <!-- <a class="btn btn-light btn-xl js-scroll-trigger" href="#about">Upload Fashion</a> -->
-          </form>
-          <hr class="divider light my-4">
-          <p class="text-white-50 mb-4">Make sure the image is a full body image.</p>
+              <div class="uploaded">
+                  <img class="mx-auto rounded-circle" src="{{ image_path }}" alt="">
+                  <h4>Description for Image Goes Here.</h4>
+                  <br>
+                  <p class="text-muted">Recommendations go here.</p>
+              </div>
+              <a class="btn btn-secondary btn-xl js-scroll-trigger" href="{{ url_for('index', _anchor='sense') }}">Try Again</a>
         </div>
       </div>
     </div>
