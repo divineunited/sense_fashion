@@ -4,11 +4,12 @@ from flask import flash # for upload flash messages
 from werkzeug.utils import secure_filename # for flask uploads
 
 ### COMMON IMPORTS:
-import os
 import json
+import os
 
 ### CUSTOM IMPORTS:
-import image_preprocess
+import custom_preprocess
+import custom_w3
 
 UPLOAD_FOLDER = os.path.join('static', 'uploads')
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
@@ -45,7 +46,9 @@ def index():
             # getting a secure filename before saving it on our server (using werzkeug.utils.secure_filename)
             filename = secure_filename(fi.filename)
             # reorienting file if needed, and changing it to a PIL Image object
-            fi = image_preprocess.fix_orientation(fi)
+            fi = custom_preprocess.fix_orientation(fi)
+            # clearing out the uploads folder before saving this one:
+            custom_w3.wipe_folder(os.path.join(app.config['UPLOAD_FOLDER']))
             # saving file onto server (or uploading to s3 - later)
             fi.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 # If it was converted to a io.BytesIO() data stream:
@@ -64,10 +67,6 @@ def result(filename):
         # taking our passed json dump and loading it back out as a list to pass to our results template
         # predictions = json.loads(predictions)
     image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    # shape = image_orient(image_path)
-    # print(shape)
-    image_style = 'transform:rotate(90deg); width:325px;'
-    image_style = 'transform:rotate(0deg); width:525px;'
     return render_template("result.html", image_path = "\\" + image_path)
 
 
