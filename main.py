@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request
 from flask import redirect, url_for
-from flask import flash # for upload flash messages 
-from werkzeug.utils import secure_filename # for flask uploads
+from flask_dropzone import Dropzone
 
 ### COMMON IMPORTS:
 import json
@@ -11,13 +10,21 @@ import os
 import custom_preprocess
 import custom_w3
 
-UPLOAD_FOLDER = os.path.join('static', 'uploads')
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
-
 
 app=Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['UPLOAD_FOLDER'] = os.path.join('static', 'uploads')
+
+# Flask-Dropzone config:
+app.config.update(
+    DROPZONE_ALLOWED_FILE_TYPE='image',
+    DROPZONE_MAX_FILE_SIZE=10,
+    DROPZONE_MAX_FILES=300,
+    # DROPZONE_UPLOAD_ON_CLICK=True,
+    # DROPZONE_REDIRECT_VIEW = 'result',
+)
+dropzone = Dropzone(app)
 
 
 def allowed_file(filename):
@@ -26,48 +33,29 @@ def allowed_file(filename):
 
 
 @app.route('/', methods=['GET', 'POST'])
-@app.route('/index', methods=['GET', 'POST'])
-def index():
+def upload():
     if request.method == 'POST':
-        # check if the post request has the file part
-        if 'pic' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        
-        fi = request.files['pic'] # Alternate Syntax: # fi = request.files.get("file")
-        
-        # if user does not select file, browser also submits an empty part without filename
-        if fi.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-
-        # Checking to make sure it's an allowed filename
-        if fi and allowed_file(fi.filename):
-            # getting a secure filename before saving it on our server (using werzkeug.utils.secure_filename)
-            filename = secure_filename(fi.filename)
-            # reorienting file if needed, and changing it to a PIL Image object
-            fi = custom_preprocess.fix_orientation(fi)
-            # clearing out the uploads folder before saving this one:
-            custom_w3.wipe_folder(os.path.join(app.config['UPLOAD_FOLDER']))
-            # saving file onto server (or uploading to s3 - later)
-            fi.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                # If it was converted to a io.BytesIO() data stream:
-                # with open(os.path.join(app.config['UPLOAD_FOLDER'], filename), "wb") as f:
-                #     f.write(fi.getvalue())
-            return redirect(url_for('result', filename=filename, _anchor='sense'))
+        f = request.files.get('file')
+        filename = f.filename
+        # reorienting file if needed, and changing it to a PIL Image object
+        f = custom_preprocess.fix_orientation(f)
+        # saving file onto server (or uploading to s3 - later)
+        f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        return 'OK' # flask needs a return statement to be happy.
     else:
+        # clearing out the uploads folder everytime we load this page a new batch:
+        custom_w3.wipe_folder(app.config['UPLOAD_FOLDER'])
         return render_template("index.html")
 
 
 # if our index is a POST request, it will save the image, and then redirect to this page and serve up the image.
-@app.route('/result/<filename>')
-def result(filename):
-        # send it as a proper JSON dumps string for the redirect routing so that it can be unpacked using a JSON loads:
-        # predictions = json.dumps(predictions)
-        # taking our passed json dump and loading it back out as a list to pass to our results template
-        # predictions = json.loads(predictions)
-    image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    return render_template("result.html", image_path = "\\" + image_path)
+@app.route('/result')
+def result():
+    dirname = os.path.dirname(os.path.abspath(__file__)) # getting the directory of this script
+    relpath = os.path.join(dirname, 'static', 'uploads') # adding the relative path of where our files are
+    filenames = [url_for('static', filename=f'uploads/{f}') for f in os.listdir(relpath)] # getting an array of paths for our files
+    # print(filenames)
+    return render_template("result.html", filenames = filenames)
 
 
 if __name__ == "__main__":

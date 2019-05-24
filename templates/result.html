@@ -31,7 +31,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
     <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="{{ url_for('index') }}">Sense Fashion</a>
+      <a class="navbar-brand js-scroll-trigger" href="{{ url_for('upload') }}">Sense Fashion</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -79,14 +79,19 @@
       <div class="row justify-content-center">
         <div class="col-lg-8 text-center">
               <div class="uploaded">
-                  <!-- <img class="mx-auto rounded-circle" src="{{ image_path }}" alt="" style="{{ image_style }}"> -->
-                  <img class="mx-auto rounded-circle" src="{{ image_path }}" alt="">
-                  <br><br>
+
+                {% for filename in filenames %}
+                  <img class="mx-auto rounded-circle" src="{{filename}}" alt="">
+                  <br>
                   <h4>Description for Image Goes Here.</h4>
                   <br>
                   <p class="text-muted">Recommendations go here.</p>
+                  <hr class="divider light my-4">
+                  <br>
+                {% endfor %}
+
               </div>
-              <a class="btn btn-secondary btn-xl js-scroll-trigger" href="{{ url_for('index', _anchor='sense') }}">Try Again</a>
+              <a class="btn btn-secondary btn-xl js-scroll-trigger" href="{{ url_for('upload', _anchor='sense') }}">Try Again</a>
         </div>
       </div>
     </div>
