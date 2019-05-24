@@ -6,7 +6,6 @@ from keras.preprocessing import image
 from skimage import transform
 
 from PIL import Image, ExifTags
-import io
 
 
 def fix_orientation(file_like_object):
