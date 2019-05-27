@@ -6,6 +6,7 @@ from skimage import transform
 # IMPORTS for CNN ML Models:
 # from keras.models import load_model
 # import tensorflow as tf
+from keras.applications import vgg16
 
 # Pillow image for orientation fixing:
 from PIL import Image, ExifTags
@@ -49,7 +50,7 @@ def image_preprocess(img_path):
     # new shape of image according to default input size for VGG16
     new_shape = (224, 224, 3)
     # Load the image from disk
-    img = image.load_img(img_path)
+    img = image.load_img(img_path) 
     # Convert the image to a numpy array
     image_array = image.img_to_array(img)
     # resize the image (must be done after it has turned into a np array):
@@ -68,5 +69,22 @@ from pathlib import Path
 p = Path("static") / 'uploads'
 filepaths = [x for x in p.iterdir() if x.is_file()]
 
-for filepath in filepaths:
-    print(image_preprocess(filepath))
+image_arrays = [image_preprocess(filepath) for filepath in filepaths]
+
+# Load Keras' VGG16 model that was pre-trained against the ImageNet database
+model = vgg16.VGG16()
+
+# Run the images through the CNN model to make predictions
+predictions = [model.predict(image_array) for image_array in image_arrays]
+
+# Look up the names of the predicted classes. This is a function to decode the predictions based on VGG16 imagenet trained classes.
+predicted_classes = [vgg16.decode_predictions(prediction) for prediction in predictions]
+
+print(predicted_classes)
+
+# print("Top predictions for this image:")
+
+# for i in range(len(predicted_classes)):
+#     for imagenet_id, name, likelihood in predicted_classes[i]:
+#         print("Prediction: {} - {:2f}".format(name, likelihood))
+#     print('-------')

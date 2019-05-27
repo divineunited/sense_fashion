@@ -4,14 +4,12 @@ from flask_dropzone import Dropzone
 
 ### COMMON IMPORTS:
 import json
-# import os
 from pathlib import Path
 
 ### CUSTOM IMPORTS:
 import custom_preprocess
 import custom_w3
 
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 app=Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -25,12 +23,9 @@ app.config.update(
     # DROPZONE_UPLOAD_ON_CLICK=True,
     # DROPZONE_REDIRECT_VIEW = 'result',
 )
+
+# instantiating the dropzone backend 
 dropzone = Dropzone(app)
-
-
-def allowed_file(filename):
-    '''This function checks to make sure the uploaded image files have allowed filenames and extensions'''
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -52,14 +47,8 @@ def upload():
 # if our index is a POST request, it will save the image, and then redirect to this page and serve up the image.
 @app.route('/result')
 def result():
-    # dirname = os.path.dirname(os.path.abspath(__file__)) # getting the directory of this script
-    # relpath = os.path.join(dirname, 'static', 'uploads') # adding the relative path of where our files are
-    # backpaths = [] # getting array of filepaths for back-end processing
-    # # preprocessing and image recognition
-    # frontpaths = [url_for('static', filename=f'uploads/{f}') for f in os.listdir(relpath)] # getting array of filepaths for front-end display
-
-    p = Path('static') / 'uploads'
-    filenames = [x for x in p.iterdir() if x.is_file()]
+    p = Path('static') / 'uploads' # the relative path of where our files are - defined as p
+    filenames = [x for x in p.iterdir() if x.is_file()] # getting filename paths
     print(filenames)
     return render_template("result.html", filenames = filenames)
 
