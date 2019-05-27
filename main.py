@@ -4,7 +4,8 @@ from flask_dropzone import Dropzone
 
 ### COMMON IMPORTS:
 import json
-import os
+# import os
+from pathlib import Path
 
 ### CUSTOM IMPORTS:
 import custom_preprocess
@@ -14,7 +15,7 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 app=Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
-app.config['UPLOAD_FOLDER'] = os.path.join('static', 'uploads')
+app.config['UPLOAD_FOLDER'] = Path('static') / 'uploads'
 
 # Flask-Dropzone config:
 app.config.update(
@@ -39,8 +40,8 @@ def upload():
         filename = f.filename
         # reorienting file if needed, and changing it to a PIL Image object
         f = custom_preprocess.fix_orientation(f)
-        # saving file onto server (or uploading to s3 - later)
-        f.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        # saving file onto server (or uploading to s3 - later) (using pathlib Path object)
+        f.save(Path('static') / 'uploads' / filename)
         return 'OK' # flask needs a return statement to be happy.
     else:
         # clearing out the uploads folder everytime we load this page a new batch:
@@ -51,13 +52,16 @@ def upload():
 # if our index is a POST request, it will save the image, and then redirect to this page and serve up the image.
 @app.route('/result')
 def result():
-    dirname = os.path.dirname(os.path.abspath(__file__)) # getting the directory of this script
-    relpath = os.path.join(dirname, 'static', 'uploads') # adding the relative path of where our files are
-    backpaths = [] # getting array of filepaths for back-end processing
-    # preprocessing and image recognition
-    frontpaths = [url_for('static', filename=f'uploads/{f}') for f in os.listdir(relpath)] # getting array of filepaths for front-end display
-    # print(filenames)
-    return render_template("result.html", filenames = frontpaths)
+    # dirname = os.path.dirname(os.path.abspath(__file__)) # getting the directory of this script
+    # relpath = os.path.join(dirname, 'static', 'uploads') # adding the relative path of where our files are
+    # backpaths = [] # getting array of filepaths for back-end processing
+    # # preprocessing and image recognition
+    # frontpaths = [url_for('static', filename=f'uploads/{f}') for f in os.listdir(relpath)] # getting array of filepaths for front-end display
+
+    p = Path('static') / 'uploads'
+    filenames = [x for x in p.iterdir() if x.is_file()]
+    print(filenames)
+    return render_template("result.html", filenames = filenames)
 
 
 if __name__ == "__main__":

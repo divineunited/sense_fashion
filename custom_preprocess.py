@@ -63,11 +63,7 @@ def image_preprocess(img_path):
     return image_array
 
 
-import os
 from pathlib import Path
-
-dirname = os.path.dirname(os.path.abspath(__file__)) # getting the directory of this script
-relpath = os.path.join(dirname, 'static', 'uploads') # adding the relative path of where our files are
 
 p = Path("static") / 'uploads'
 filepaths = [x for x in p.iterdir() if x.is_file()]
