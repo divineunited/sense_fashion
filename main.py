@@ -53,9 +53,11 @@ def upload():
 def result():
     dirname = os.path.dirname(os.path.abspath(__file__)) # getting the directory of this script
     relpath = os.path.join(dirname, 'static', 'uploads') # adding the relative path of where our files are
-    filenames = [url_for('static', filename=f'uploads/{f}') for f in os.listdir(relpath)] # getting an array of paths for our files
+    backpaths = [] # getting array of filepaths for back-end processing
+    # preprocessing and image recognition
+    frontpaths = [url_for('static', filename=f'uploads/{f}') for f in os.listdir(relpath)] # getting array of filepaths for front-end display
     # print(filenames)
-    return render_template("result.html", filenames = filenames)
+    return render_template("result.html", filenames = frontpaths)
 
 
 if __name__ == "__main__":
