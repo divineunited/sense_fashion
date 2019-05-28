@@ -80,12 +80,12 @@
         <div class="col-lg-8 text-center">
               <div class="uploaded">
 
-                {% for filename in filenames %}
-                  <img class="mx-auto rounded-circle" src="{{filename}}" alt="">
+                {% for path, prediction in paths_predictions.items() %}
+                  <img class="mx-auto rounded-circle" src="{{path}}" alt="">
                   <br>
-                  <h4>Description for Image Goes Here.</h4>
+                  <h4>I think this is a {{prediction[0]}}.</h4>
                   <br>
-                  <p class="text-muted">Recommendations go here.</p>
+                  <p class="text-muted">Confidence level: {{prediction[1]}}</p>
                   <hr class="divider light my-4">
                   <br>
                 {% endfor %}

@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 
 ### CUSTOM IMPORTS:
-import custom_preprocess
+import custom_image
 import custom_w3
 
 
@@ -34,7 +34,7 @@ def upload():
         f = request.files.get('file')
         filename = f.filename
         # reorienting file if needed, and changing it to a PIL Image object
-        f = custom_preprocess.fix_orientation(f)
+        f = custom_image.fix_orientation(f)
         # saving file onto server (or uploading to s3 - later) (using pathlib Path object)
         f.save(Path('static') / 'uploads' / filename)
         return 'OK' # flask needs a return statement to be happy.
@@ -48,9 +48,14 @@ def upload():
 @app.route('/result')
 def result():
     p = Path('static') / 'uploads' # the relative path of where our files are - defined as p
-    filenames = [x for x in p.iterdir() if x.is_file()] # getting filename paths
-    print(filenames)
-    return render_template("result.html", filenames = filenames)
+    filepaths = [x for x in p.iterdir() if x.is_file()] # getting filename paths
+    
+    # getting predictions. this part takes a while - might want to build a progress bar:
+        # progress bar: https://stackoverflow.com/questions/24251898/flask-app-update-progress-bar-while-function-runs
+    paths_predictions = custom_image.predict_images(filepaths) 
+
+    return render_template("result.html", paths_predictions = paths_predictions)
+
 
 
 if __name__ == "__main__":
