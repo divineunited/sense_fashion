@@ -7,6 +7,7 @@ from skimage import transform
 # from keras.models import load_model
 # import tensorflow as tf
 from keras.applications import vgg16
+from keras import backend as K
 
 # Pillow image for orientation fixing:
 from PIL import Image, ExifTags
@@ -67,6 +68,9 @@ def image_preprocess(img_path):
 def predict_images(img_paths):
     '''identifying images using our CNN ML model. Accepts an array of paths to uploaded images. Returns a dictionary / hashmap of imgpaths as keys and an array of highest predicted and percent confidence as values'''
 
+    # clearing backend keras session to solve tensorflow threading issue:
+    K.clear_session()
+
     # preprocess our images using the helper function
     image_arrays = [image_preprocess(img_path) for img_path in img_paths]
 
@@ -79,8 +83,11 @@ def predict_images(img_paths):
     # Look up the names of the predicted classes. This is a function to decode the predictions based on VGG16 imagenet trained classes. It gives us 5 predictions with probabilities in order. We just want the top prediction.
     decoded_array = [vgg16.decode_predictions(prediction)[0][0] for prediction in predictions]
 
-    # getting our final dictionary of image_paths as keys and highest predicted decoded string with percent confidence array as values
-    path_pred = {img_path : [decoded[1], str(round(decoded[2] * 100, 2)) + '%'] for img_path, decoded in zip(img_paths, decoded_array)}
+    # getting our final dictionary of image_paths as keys and highest predicted decoded string with percent confidence array as values. Here we are filtering predictions to be passed ONLY if confidence is at least 60 percent. Otherwise, we are passing 0 and will allow Jinja templating engine to check if prediction was passed.
+    path_pred = {img_path : ([decoded[1], str(round(decoded[2] * 100, 2)) + '%'] if decoded[2] >= 0.6 else [decoded[1], 0]) for img_path, decoded in zip(img_paths, decoded_array)}
+
+    # clearing backend keras session after prediction was complete:
+    K.clear_session()
 
     return path_pred
     
@@ -93,4 +100,4 @@ def predict_images(img_paths):
 # p = Path("static") / 'uploads'
 # filepaths = [x for x in p.iterdir() if x.is_file()]
 
-# predict_image(filepaths)
+# print(predict_images(filepaths))

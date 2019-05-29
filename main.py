@@ -36,6 +36,7 @@ def upload():
         # reorienting file if needed, and changing it to a PIL Image object
         f = custom_image.fix_orientation(f)
         # saving file onto server (or uploading to s3 - later) (using pathlib Path object)
+            # S3: https://stackoverflow.com/questions/24397845/is-there-a-cleaner-way-to-rotate-smartphone-images-uploaded-via-flask-before-pus
         f.save(Path('static') / 'uploads' / filename)
         return 'OK' # flask needs a return statement to be happy.
     else:

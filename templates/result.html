@@ -83,9 +83,15 @@
                 {% for path, prediction in paths_predictions.items() %}
                   <img class="mx-auto rounded-circle" src="{{path}}" alt="">
                   <br>
-                  <h4>I think this is a {{prediction[0]}}.</h4>
-                  <br>
-                  <p class="text-muted">Confidence level: {{prediction[1]}}</p>
+                  {% if prediction[1] %}
+                    <h4>What I think this is: {{prediction[0]}}</h4>
+                    <br>
+                    <p class="text-white">Confidence level: {{prediction[1]}}</p>
+                  {% else %}
+                    <h4>I'm sorry, I don't think I've seen this before.</h4>
+                    <br>
+                    <p class="text-white">My best guess would be: {{prediction[0]}}</p>
+                  {% endif %}
                   <hr class="divider light my-4">
                   <br>
                 {% endfor %}
