@@ -1,2 +1,3 @@
-static/uploads
 test_reorientation
+auth/
+venv/

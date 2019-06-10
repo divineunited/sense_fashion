@@ -9,3 +9,6 @@ Flask-Dropzone==1.5.3
 Keras==2.2.4
 Keras-Preprocessing==1.0.9
 tensorflow==1.13.1
+scikit-image==0.15.0
+pylint==2.2.2
+boto3==1.9.164
