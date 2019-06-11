@@ -80,21 +80,22 @@
         <div class="col-lg-8 text-center">
               <div class="uploaded">
 
-                {% for path, prediction in paths_predictions.items() %}
-                  <img class="mx-auto rounded-circle" src="{{path}}" alt="">
-                  <br>
-                  {% if prediction[1] %}
-                    <h4>What I think this is: {{prediction[0]}}</h4>
-                    <br>
-                    <p class="text-white">Confidence level: {{prediction[1]}}</p>
-                  {% else %}
-                    <h4>I'm sorry, I don't think I've seen this before.</h4>
-                    <br>
-                    <p class="text-white">My best guess would be: {{prediction[0]}}</p>
-                  {% endif %}
-                  <hr class="divider light my-4">
-                  <br>
-                {% endfor %}
+                <h3>Bucket Info</h3>
+                <p>Created: {{ my_bucket.creation_date }} </p>
+
+                <hr>
+                <table class="table table-striped">
+                  <tr>
+                    <th>Filename</th>
+                    <th>Last Modified</th>
+                  </tr>
+                  {% for f in files %}
+                  <tr>
+                    <td>{{ f.key }}</td>
+                    <td>{{ f.last_modified }}</td>
+                  </tr>
+                  {% endfor %}
+                </table>
 
               </div>
               <a class="btn btn-secondary btn-xl js-scroll-trigger" href="{{ url_for('index', _anchor='sense') }}">Try Again</a>

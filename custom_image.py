@@ -41,6 +41,7 @@ def fix_orientation(file_like_object):
         
     # print(img.size) # flag to see updated dimensions
 
+    # this returns the PIL image object
     return img
 
 
