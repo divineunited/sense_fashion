@@ -1,4 +1,4 @@
-test_reorientation
 auth/
 venv/
+models/
 .env
