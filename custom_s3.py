@@ -35,7 +35,8 @@ def wipe_folder(folder_path):
             if os.path.isfile(file_path):
                 # NOTE: os.remove() and os.unlink() both work the same
                 os.unlink(file_path) 
-            # checking if it is a directory, then delete directory -- uncomoment if you want to use this
-            # elif os.path.isdir(file_path): shutil.rmtree(file_path)
+            # checking if it is a directory, then delete directory
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
         except Exception as e:
             print(e)

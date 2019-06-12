@@ -1,6 +1,6 @@
 import os
 
-# this gets the authentication keys from .env file - to have it run correctly, after you set up the .env variable, in the shell, run the command 'flask run'
+# this gets the authentication keys from .env file - to have it run correctly, after you set up the .env variable, in the shell, type the command 'flask run'
 
 S3_BUCKET = os.environ.get("S3_BUCKET")
 S3_KEY = os.environ.get("S3_KEY")
