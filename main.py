@@ -9,6 +9,7 @@ from pathlib import Path
 import datetime
 
 ### CUSTOM IMPORTS:
+import custom_fashion
 import custom_vgg
 import custom_s3
 
@@ -147,7 +148,7 @@ def fashion():
     
     # getting predictions. this part takes a while - might want to build a progress bar:
         # progress bar: https://stackoverflow.com/questions/24251898/flask-app-update-progress-bar-while-function-runs
-    paths_predictions = custom_vgg.predict_images(filepaths)
+    paths_predictions = custom_fashion.predict_images(filepaths)
 
     return render_template("fashion.html", paths_predictions = paths_predictions)
 

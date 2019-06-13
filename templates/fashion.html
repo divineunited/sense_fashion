@@ -83,15 +83,28 @@
                 {% for path, prediction in paths_predictions.items() %}
                   <img class="mx-auto rounded-circle" src="{{path}}" alt="">
                   <br>
-                  {% if prediction[1] %}
-                    <h4>What I think this is: {{prediction[0]}}</h4>
-                    <br>
-                    <p class="text-white">Confidence level: {{prediction[1]}}</p>
-                  {% else %}
-                    <h4>I'm sorry, I don't think I've seen this before.</h4>
-                    <br>
-                    <p class="text-white">My best guess would be: {{prediction[0]}}</p>
-                  {% endif %}
+                  <hr class="divider light my-4">
+                    <table class="table table-striped table-bordered table-hover">
+                      <tr>
+                        <th>Detected Fabric</th>
+                        <th>Detected Pattern</th>
+                        <th>Detected Clothing Type</th>
+                      </tr>
+                      
+                      <tr>
+                        <td>{{ prediction[0] }}</td>
+                        <td>{{ prediction[1] }}</td>
+                        <td>{{ prediction[2] }}</td>
+                      </tr>
+                      
+                    </table>
+
+                    {% if prediction[3] %}
+                      <h4>Style Recommendation: {{prediction[3]}}</h4>
+                    {% else %}
+                      <h4>Sorry, I don't have a recommendation to go with this piece of clothing.</h4>
+                    {% endif %}
+                    
                   <hr class="divider light my-4">
                   <br>
                 {% endfor %}

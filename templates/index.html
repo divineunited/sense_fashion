@@ -83,7 +83,10 @@
       <div class="row justify-content-center">
         <div class="col-lg-8 text-center">
           {{ dropzone.create('/upload') }}
-          <a class="btn btn-secondary btn-xl js-scroll-trigger" href="{{ url_for('result', _anchor='sense') }}">Click here when you have finished uploading</a>
+          <a class="btn btn-secondary btn-xl js-scroll-trigger" href="{{ url_for('fashion', _anchor='sense') }}">Click here for fashion detection.</a>
+          <br><br>
+          <a class="btn btn-secondary btn-xl js-scroll-trigger" href="{{ url_for('result', _anchor='sense') }}">Click here for generic image detection.</a>
+          <br>
           <hr class="divider light my-4">
           <p class="text-white-50 mb-4">Add one image or up to 300 images with a maximum size of 10 mb per image.</p>
         </div>

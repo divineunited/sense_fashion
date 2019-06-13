@@ -30,6 +30,74 @@ def image_preprocess(img_path):
     return image_array
 
 
+def recommend_style(arr):
+    '''Accepts an array of 0-3 strings describing the clothing. Matches it up with a possible style based on our hard-coded dictionary and appends it to the array. Returns appended array.'''
+    style = {'plain, shirt': 'the_office',
+            'plain, blouse': 'the_office',
+             'plain, sweater':'the_office',
+             'plain, dress': 'the_office',
+             'plain, blazer': 'the_office',
+             'plain, skirt': 'the_office',
+            'cotton, dot, dress': 'nautical',
+           'cotton, dot, cardigan': 'nautical',
+           'cotton, dot, blouse': 'nautical',
+           'cotton, stripe, dress': 'nautical',
+           'cotton, stripe, cardigan': 'nautical',
+           'cotton, stripe, blouse': 'nautical',
+           'linen, dot, dress': 'nautical',
+           'linen, dot, cardigan': 'nautical',
+           'linen, dot, blouse': 'nautical',
+           'linen, stripe, dress': 'nautical',
+           'linen, stripe, cardigan': 'nautical',
+           'linen, stripe, blouse': 'nautical',
+           'lace, dot, dress': 'nautical',
+           'lace, dot, cardigan': 'nautical',
+           'lace, dot, blouse': 'nautical',
+           'lace, stripe, dress': 'nautical',
+           'lace, stripe, cardigan': 'nautical',
+           'lace, stripe, blouse': 'nautical',
+            'palm, shorts': 'by_the_beach',
+            'palm, tank': 'by_the_beach',
+            'palm, tee' :'by_the_beach',
+            'palm, romper': 'by_the_beach',
+            'floral, shorts': 'by_the_beach',
+            'floral, tank': 'by_the_beach',
+            'floral, tee' :'by_the_beach', 
+            'floral, romper': 'by_the_beach',
+             'cotton, colorblock, tank': 'street_style',
+            'denim, graphic, tee': 'street_style',
+                'denim, graphic, jeans': 'street_style',
+                'denim, graphic, jacket': 'street_style',
+                'denim, graphic, hoodie': 'street_style',
+                'leather, graphic, tee': 'street_style',
+                'leather, graphic, jeans': 'street_style',
+                'leather, graphic, jacket': 'street_style',
+                'leather, graphic, hoodie': 'street_style',
+                'spandex, colorblock, legging': 'athlesiure',
+             'spandex, colorblock, exercise_shorts': 'athelesiure',
+             'spandex, colorblock, tee': 'athelesiure',
+             'spandex, colorblock, sweatpants' : 'athelesiure',
+             'spandex, colorblock, hoodie': 'athelesiure',
+            'lace, stripe, shirt': 'night_out',
+             'lace, stripe, skirt': 'night_out',
+             'lace, stripe, jeans': 'night_out',
+              'lace, plain, dress': 'night_out',
+            'chiffon, paisley, dress': 'festival',
+           'chiffon, zig_zag, dress': 'festival',
+           'chiffon, distressed, dress': 'festival',
+             'cotton, plain, shorts': 'festival'
+    }
+
+    attr_cloth = []
+    attr_cloth.append(arr[0].lower())
+    attr_cloth.append(arr[1].lower())
+    attr_cloth.append(arr[2].lower())
+    attr_cloth = tuple(attr_cloth)
+    attr_cloth = ', '.join(attr_cloth)
+
+    return arr.append(style.get(attr_cloth, None))
+
+
 def predict_images(img_paths):
     '''identifying images using our CNN ML model. Accepts an array of paths to uploaded images. Returns a dictionary / hashmap of imgpaths as keys and an array of highest predicted and percent confidence as values'''
 
@@ -88,21 +156,23 @@ def predict_images(img_paths):
     11: 'Tee'
     }
 
+    #### QUESTION - we need to add 0 or None if model gives us no prediction. Does it do that already?
+
     fabric_predictions = [class_fabric.get(prediction[0]) for prediction in fabric_predictions]
     pattern_predictions = [class_pattern.get(prediction[0]) for prediction in pattern_predictions]
     type_predictions = [class_type.get(prediction[0]) for prediction in type_predictions]
 
-    print(fabric_predictions)
-    print(pattern_predictions)
-    print(type_predictions)
+    # getting our final dictionary of image_paths as keys and 3 predictions as a list as values
+    path_pred = {img_path : [fabric_prediction, pattern_prediction, type_prediction] for img_path, fabric_prediction, pattern_prediction, type_prediction in zip(img_paths, fabric_predictions, pattern_predictions, type_predictions)}
 
-    # getting our final dictionary of image_paths as keys and highest predicted decoded string with percent confidence array as values. Here we are filtering predictions to be passed ONLY if confidence is at least 60 percent. Otherwise, we are passing 0 and will allow Jinja templating engine to check if prediction was passed.
-    # path_pred = {img_path : ([decoded[1], str(round(decoded[2] * 100, 2)) + '%'] if decoded[2] >= 0.6 else [decoded[1], 0]) for img_path, decoded in zip(img_paths, decoded_array)}
+    # appending a recommendation to our prediction using helper function
+    for arr in path_pred.values():
+        arr = recommend_style(arr)
 
     # clearing backend keras session after prediction was complete:
     K.clear_session()
 
-    # return path_pred
+    return path_pred
     
 
 
