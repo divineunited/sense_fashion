@@ -2,6 +2,11 @@ from flask import Flask, render_template, request
 from flask import redirect, url_for, session
 from flask_dropzone import Dropzone
 
+### ML Model Loading
+from keras.applications import vgg16
+from keras.models import load_model
+import tensorflow as tf
+
 ### COMMON IMPORTS:
 import json
 import os
@@ -33,6 +38,26 @@ app.config.update(
 )
 # instantiating the dropzone backend 
 dropzone = Dropzone(app)
+
+
+###### Loading our Models:
+# Load Keras' VGG16 model that was pre-trained against the ImageNet database
+model_vgg = vgg16.VGG16()
+# creating a TF default graph that helps with threading issues: https://github.com/tensorflow/tensorflow/issues/14356#issuecomment-389606499
+graph = tf.get_default_graph()
+
+# load our customized fashion pre-trained models -- preloading these models does not work ATM.
+# fabric = load_model(os.path.abspath(str(Path('models') / 'vgg_weights_fabric.hdf5')))
+# fabric._make_predict_function()
+# graph_fab = tf.get_default_graph()
+
+# pattern = load_model(os.path.abspath(str(Path('models') / 'vgg_weights_data_aug_frozen_pattern_EI')))
+# pattern._make_predict_function()
+# graph_pat = tf.get_default_graph()
+
+# type_clothing = load_model(os.path.abspath(str(Path('models') / 'Cloth_type.hdf5')))
+# type_clothing._make_predict_function()
+# graph_typ = tf.get_default_graph()
 
 
 
@@ -115,9 +140,7 @@ def result():
     p = Path('static') / 'uploads' / sdirectory # the relative path of where our files are temp locally stored - defined as p
     filepaths = [x for x in p.iterdir() if x.is_file()] # getting filename paths
     
-    # getting predictions. this part takes a while - might want to build a progress bar:
-        # progress bar: https://stackoverflow.com/questions/24251898/flask-app-update-progress-bar-while-function-runs
-    paths_predictions = custom_vgg.predict_images(filepaths)
+    paths_predictions = custom_vgg.predict_images(filepaths, model_vgg, graph)
 
     return render_template("result.html", paths_predictions = paths_predictions)
 
@@ -134,19 +157,11 @@ def fashion():
         sdirectory = session.get('sdirectory', None)
     else:
         sdirectory = '__undefined'
-    
-    # getting filepaths of our s3 bucket
-    # s3 = boto3.resource('s3')
-    # my_bucket = s3.Bucket(S3_BUCKET)
-    # When a list of objects is retrieved from Amazon S3, they Key of the object is always its full path:
-    # https://stackoverflow.com/questions/27292145/python-boto-list-contents-of-specific-dir-in-bucket
-    # https://stackoverflow.com/questions/36205481/read-file-content-from-s3-bucket-with-boto3
-    # s3filepaths = [obj.key for obj in my_bucket.objects.filter(Prefix = sdirectory + "/")]
 
     p = Path('static') / 'uploads' / sdirectory # the relative path of where our files are temp locally stored - defined as p
     filepaths = [x for x in p.iterdir() if x.is_file()] # getting filename paths
     
-    # getting predictions. this part takes a while - might want to build a progress bar:
+    # getting predictions. this part takes a while since I cannot figure out how to pass three models and three graphs without tensorflow flipping out on me...so - might want to build a progress bar:
         # progress bar: https://stackoverflow.com/questions/24251898/flask-app-update-progress-bar-while-function-runs
     paths_predictions = custom_fashion.predict_images(filepaths)
 

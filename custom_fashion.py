@@ -146,8 +146,8 @@ def predict_images(img_paths):
     1: 'Blouse',
     2: 'Cardigan',
     3: 'Dress',
-    4: 'Exerciseshort',
-    5: 'Hoodies',
+    4: 'Exercise shorts',
+    5: 'Hoodie',
     6: 'Jeans',
     7: 'Romper',
     8: 'Shorts',
@@ -155,8 +155,6 @@ def predict_images(img_paths):
     10: 'Tank',
     11: 'Tee'
     }
-
-    #### QUESTION - we need to add 0 or None if model gives us no prediction. Does it do that already?
 
     fabric_predictions = [class_fabric.get(prediction[0]) for prediction in fabric_predictions]
     pattern_predictions = [class_pattern.get(prediction[0]) for prediction in pattern_predictions]
@@ -179,8 +177,8 @@ def predict_images(img_paths):
 # testing function:
 # -----------
 
-from pathlib import Path
-p = Path("static") / 'uploads'
-filepaths = [x for x in p.iterdir() if x.is_file()]
+# from pathlib import Path
+# p = Path("static") / 'uploads'
+# filepaths = [x for x in p.iterdir() if x.is_file()]
 
-print(predict_images(filepaths))
+# print(predict_images(filepaths))
