@@ -179,8 +179,8 @@ def predict_images(img_paths):
 # testing function:
 # -----------
 
-# from pathlib import Path
-# p = Path("static") / 'uploads'
-# filepaths = [x for x in p.iterdir() if x.is_file()]
+from pathlib import Path
+p = Path("static") / 'uploads'
+filepaths = [x for x in p.iterdir() if x.is_file()]
 
-# print(predict_images(filepaths))
+print(predict_images(filepaths))

@@ -42,14 +42,11 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#sense">Sense</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#about">About</a>
           </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#portfolio">DataSets</a>
-          </li> -->
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#sense">Sense</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#team">Team</a>
           </li>
@@ -77,15 +74,87 @@
     </div>
   </header>
 
+
+<!-- About Section -->
+<section class="page-section" id="about">
+  <div class="container">
+    <h2 class="text-center mt-0">How it works</h2>
+    <div class="row">
+      <div class="col-lg-3 col-md-6 text-center">
+        <div class="mt-5">
+            <i class="fas fa-4x fa-cloud-upload-alt text-primary mb-4"></i>
+          <h3 class="h4 mb-2">Upload</h3>
+          <p class="text-muted mb-0">Click <a href="{{ url_for('files') }}">here</a> to see the images uploaded to S3 on Amazon web Services.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 text-center">
+        <div class="mt-5">
+          <i class="fas fa-4x fa-project-diagram text-primary mb-4"></i>
+          <h3 class="h4 mb-2">Recognize</h3>
+          <p class="text-muted mb-0">3 custom built CNN models to classify fabric, pattern, & type of clothing.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 text-center">
+        <div class="mt-5">
+          <i class="fas fa-4x fa-share-square text-primary mb-4"></i>
+          <h3 class="h4 mb-2">Recommend</h3>
+          <p class="text-muted mb-0">Make style recommendations based on the recognized clothing.</p>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6 text-center">
+        <div class="mt-5">
+            <i class="fas fa-4x fa-laptop-code text-primary mb-4"></i>
+          <h3 class="h4 mb-2">Display</h3>
+          <p class="text-muted mb-0">Each image is smartly rotated using image metadata.</p>
+        </div>
+      </div>
+    </div>
+    <br><br>
+    <hr class="divider my-4">
+    <h4 class="text-center mt-0">Technology Stack</h4>
+    <div class='row'>
+        <div class="col-lg-3 col-md-6 text-center">
+            <div class="mt-5">
+              <i class="fab fa-4x fa-aws text-primary mb-4"></i>
+              <p class="text-muted mb-0">Amazon Web Services</p>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 text-center">
+            <div class="mt-5">
+              <i class="fab fa-4x fa-python text-primary mb-4"></i>
+              <p class="text-muted mb-0">Python & Flask</p>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 text-center">
+            <div class="mt-5">
+              <i class="fab fa-4x fa-react text-primary mb-4"></i>
+              <p class="text-muted mb-0">React</p>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 text-center">
+            <div class="mt-5">
+              <i class="fab fa-4x fa-bootstrap text-primary mb-4"></i>
+              <p class="text-muted mb-0">Bootstrap</p>
+            </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
   <!-- Sense Section -->
   <section class="page-section bg-primary" id="sense">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 text-center">
           {{ dropzone.create('/upload') }}
-          <a class="btn btn-secondary btn-xl js-scroll-trigger" href="{{ url_for('fashion', _anchor='sense') }}">Click here for fashion detection.</a>
+          <a class="btn btn-secondary btn-xl js-scroll-trigger" href="{{ url_for('fashion') }}">Click here for fashion detection.</a>
           <br><br>
-          <a class="btn btn-secondary btn-xl js-scroll-trigger" href="{{ url_for('result', _anchor='sense') }}">Click here for generic image detection.</a>
+          <a class="btn btn-secondary btn-xl js-scroll-trigger" href="{{ url_for('result') }}">Click here for generic image detection.</a>
           <br>
           <hr class="divider light my-4">
           <p class="text-white-50 mb-4">Add one image or up to 300 images with a maximum size of 10 mb per image.</p>
@@ -94,46 +163,10 @@
     </div>
   </section>
 
-  <!-- About Section -->
-  <section class="page-section" id="about">
-    <div class="container">
-      <h2 class="text-center mt-0">How it works</h2>
-      <hr class="divider my-4">
-      <div class="row">
-        <div class="col-lg-3 col-md-6 text-center">
-          <div class="mt-5">
-            <i class="fas fa-4x fa-gem text-primary mb-4"></i>
-            <h3 class="h4 mb-2">Research</h3>
-            <p class="text-muted mb-0">We built upon the research by VizWiz.</p>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 text-center">
-          <div class="mt-5">
-            <i class="fas fa-4x fa-laptop-code text-primary mb-4"></i>
-            <h3 class="h4 mb-2">Yolo3</h3>
-            <p class="text-muted mb-0">Image recognition trained and enhanced upon.</p>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 text-center">
-          <div class="mt-5">
-            <i class="fas fa-4x fa-globe text-primary mb-4"></i>
-            <h3 class="h4 mb-2">OpenCV</h3>
-            <p class="text-muted mb-0">Another massive library that we used to train and uplift</p>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 text-center">
-          <div class="mt-5">
-            <i class="fas fa-4x fa-heart text-primary mb-4"></i>
-            <h3 class="h4 mb-2">Inclusive</h3>
-            <p class="text-muted mb-0">Built for inclusivity to the visually impaired.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  
 
   <!-- Datasets Section -->
-  <section id="portfolio">
+  <!-- <section id="portfolio">
     <div class="container text-center">
         <h3 class="mb-4">Trained Datasets</h3>
     </div>
@@ -219,7 +252,7 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- Team Section -->
   <section class="page-section bg-dark text-white" id="team">
@@ -231,7 +264,7 @@
             <div class="team-member">
               <img class="mx-auto rounded-circle" src="{{ url_for('static', filename='img/team/profile_danny.JPG') }}" alt="">
               <h4>Danny Vu</h4>
-              <p class="text-muted">Full-Stack Engineer</p>
+              <p class="text-muted">Full-stack deployment</p>
               <ul class="list-inline social-buttons">
                 <li class="list-inline-item">
                   <a href="https://github.com/divineunited">
@@ -250,7 +283,7 @@
           <div class="team-member">
             <img class="mx-auto rounded-circle" src="{{ url_for('static', filename='img/team/profile_eloise.jpg') }}" alt="">
             <h4>Eloise Rousseau</h4>
-            <p class="text-muted">Product and Research Manager</p>
+            <p class="text-muted">Model Training</p>
             <ul class="list-inline social-buttons">
                 <li class="list-inline-item">
                   <a href="https://github.com/divineunited">
@@ -269,7 +302,7 @@
           <div class="team-member">
             <img class="mx-auto rounded-circle" src="{{ url_for('static', filename='img/team/profile_edmund.jpg') }}" alt="">
             <h4>Edmund Chan</h4>
-            <p class="text-muted">Machine Learning Engineer</p>
+            <p class="text-muted">Model Training</p>
             <ul class="list-inline social-buttons">
                 <li class="list-inline-item">
                   <a href="https://github.com/divineunited">
@@ -288,7 +321,7 @@
           <div class="team-member">
             <img class="mx-auto rounded-circle" src="{{ url_for('static', filename='img/team/profile_leena.jpg') }}" alt="">
             <h4>Leena Sherif</h4>
-            <p class="text-muted">Data Analytics</p>
+            <p class="text-muted">Model Training</p>
             <ul class="list-inline social-buttons">
                 <li class="list-inline-item">
                   <a href="https://github.com/divineunited">
@@ -315,9 +348,9 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 text-center">
-          <h2 class="mt-0">Let's Get In Touch!</h2>
+          <h2 class="mt-0">Get In Touch</h2>
           <hr class="divider my-4">
-          <p class="text-muted mb-5">Would you like to build upon our work? Send us a message.</p>
+          <p class="text-muted mb-5">We'd love to hear from you. Send us a message.</p>
         </div>
       </div>
       <div class="row">
@@ -336,7 +369,7 @@
   <!-- Footer -->
   <footer class="bg-light py-5">
     <div class="container">
-      <div class="small text-center text-muted">Copyright &copy; 2019 DEEL</div>
+      <div class="small text-center text-muted">Built with Love</div>
     </div>
   </footer>
 

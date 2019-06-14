@@ -2,3 +2,4 @@ auth/
 venv/
 models/
 .env
+static/uploads/

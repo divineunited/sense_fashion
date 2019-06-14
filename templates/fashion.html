@@ -38,40 +38,23 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto my-2 my-lg-0">
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#sense">Sense</a>
+            <a class="nav-link js-scroll-trigger" href="{{ url_for('index', _anchor='about') }}">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#about">About</a>
-          </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#portfolio">DataSets</a>
-          </li> -->
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#team">Team</a>
+            <a class="nav-link js-scroll-trigger" href="{{ url_for('index', _anchor='sense') }}">Sense</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+            <a class="nav-link js-scroll-trigger" href="{{ url_for('index', _anchor='team') }}">Team</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="{{ url_for('index', _anchor='contact') }}">Contact</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- Masthead -->
-  <header class="masthead">
-    <div class="container h-100">
-      <div class="row h-100 align-items-center justify-content-center text-center">
-        <div class="col-lg-10 align-self-end">
-          <h1 class="text-uppercase text-white font-weight-bold">Sense Fashion</h1>
-          <hr class="divider my-4">
-        </div>
-        <div class="col-lg-8 align-self-baseline">
-          <p class="text-white-75 font-weight-light mb-5">How's your fashion sense?</p>
-          <a class="btn btn-primary btn-xl js-scroll-trigger" href="#sense">Try It Out</a>
-        </div>
-      </div>
-    </div>
-  </header>
+
 
   <!-- Sense Section -->
   <section class="page-section bg-primary" id="sense">
@@ -83,6 +66,8 @@
                 {% for path, prediction in paths_predictions.items() %}
                   <img class="mx-auto rounded-circle" src="{{path}}" alt="">
                   <br>
+                  <br>
+                  <h4 class="h4 mb-2">{{ prediction[0] }}, {{ prediction[1] }}, {{ prediction[2] }}</h4>
                   <hr class="divider light my-4">
                     <table class="table table-striped table-bordered table-hover">
                       <tr>
@@ -102,7 +87,7 @@
                     {% if prediction[3] %}
                       <h4>Style Recommendation: {{prediction[3]}}</h4>
                     {% else %}
-                      <h4>Sorry, I don't have a recommendation to go with this piece of clothing.</h4>
+                      <p class="text-muted">Sorry, I don't have a recommendation to go with this piece of clothing.</p>
                     {% endif %}
                     
                   <hr class="divider light my-4">
@@ -116,251 +101,15 @@
     </div>
   </section>
 
-  <!-- About Section -->
-  <section class="page-section" id="about">
-    <div class="container">
-      <h2 class="text-center mt-0">How it works</h2>
-      <hr class="divider my-4">
-      <div class="row">
-        <div class="col-lg-3 col-md-6 text-center">
-          <div class="mt-5">
-            <i class="fas fa-4x fa-gem text-primary mb-4"></i>
-            <h3 class="h4 mb-2">Research</h3>
-            <p class="text-muted mb-0">We built upon the research by VizWiz.</p>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 text-center">
-          <div class="mt-5">
-            <i class="fas fa-4x fa-laptop-code text-primary mb-4"></i>
-            <h3 class="h4 mb-2">Yolo3</h3>
-            <p class="text-muted mb-0">Image recognition trained and enhanced upon.</p>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 text-center">
-          <div class="mt-5">
-            <i class="fas fa-4x fa-globe text-primary mb-4"></i>
-            <h3 class="h4 mb-2">OpenCV</h3>
-            <p class="text-muted mb-0">Another massive library that we used to train and uplift</p>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 text-center">
-          <div class="mt-5">
-            <i class="fas fa-4x fa-heart text-primary mb-4"></i>
-            <h3 class="h4 mb-2">Inclusive</h3>
-            <p class="text-muted mb-0">Built for inclusivity to the visually impaired.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Datasets Section -->
-  <section id="portfolio">
-    <div class="container text-center">
-        <h3 class="mb-4">Trained Datasets</h3>
-    </div>
-    <div class="container-fluid p-0">
-      <div class="row no-gutters">
-        <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="{{ url_for('static', filename='img/portfolio/fashion_01.jpg') }}">
-            <img class="img-fluid" src="{{ url_for('static', filename='img/portfolio/fashion_01.jpg') }}" alt="">
-            <div class="portfolio-box-caption">
-              <div class="project-category text-white-50">
-                Dataset
-              </div>
-              <div class="project-name">
-                MNIST
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="{{ url_for('static', filename='img/portfolio/fashion_02.jpg') }}">
-            <img class="img-fluid" src="{{ url_for('static', filename='img/portfolio/fashion_02.jpg') }}" alt="">
-            <div class="portfolio-box-caption">
-              <div class="project-category text-white-50">
-                Dataset
-              </div>
-              <div class="project-name">
-                Deep Fashion
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="{{ url_for('static', filename='img/portfolio/fashion_03.jpg') }}">
-            <img class="img-fluid" src="{{ url_for('static', filename='img/portfolio/fashion_03.jpg') }}" alt="">
-            <div class="portfolio-box-caption">
-              <div class="project-category text-white-50">
-                Dataset
-              </div>
-              <div class="project-name">
-                MobileNet
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="{{ url_for('static', filename='img/portfolio/fashion_04.jpg') }}">
-            <img class="img-fluid" src="{{ url_for('static', filename='img/portfolio/fashion_04.jpg') }}" alt="">
-            <div class="portfolio-box-caption">
-              <div class="project-category text-white-50">
-                Dataset
-              </div>
-              <div class="project-name">
-                Open CV
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="{{ url_for('static', filename='img/portfolio/fashion_05.jpg') }}">
-            <img class="img-fluid" src="{{ url_for('static', filename='img/portfolio/fashion_05.jpg') }}" alt="">
-            <div class="portfolio-box-caption">
-              <div class="project-category text-white-50">
-                Dataset
-              </div>
-              <div class="project-name">
-                Yolo3
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col-lg-4 col-sm-6">
-          <a class="portfolio-box" href="{{ url_for('static', filename='img/portfolio/fashion_06.jpg') }}">
-            <img class="img-fluid" src="{{ url_for('static', filename='img/portfolio/fashion_06.jpg') }}" alt="">
-            <div class="portfolio-box-caption p-3">
-              <div class="project-category text-white-50">
-                Dataset
-              </div>
-              <div class="project-name">
-                VizWiz
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Team Section -->
-  <section class="page-section bg-dark text-white" id="team">
-    <div class="container text-center">
-      <h2 class="mb-4">Development Team</h2>
-      <hr class="divider my-4">
-      <div class="row">
-        <div class="col-sm-3">
-            <div class="team-member">
-              <img class="mx-auto rounded-circle" src="{{ url_for('static', filename='img/team/profile_danny.JPG') }}" alt="">
-              <h4>Danny Vu</h4>
-              <p class="text-muted">Full-Stack Engineer</p>
-              <ul class="list-inline social-buttons">
-                <li class="list-inline-item">
-                  <a href="https://github.com/divineunited">
-                    <i class="fab fa-github"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a href="https://www.linkedin.com/in/danieldukevu/">
-                    <i class="fab fa-linkedin-in"></i>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        <div class="col-sm-3">
-          <div class="team-member">
-            <img class="mx-auto rounded-circle" src="{{ url_for('static', filename='img/team/profile_eloise.jpg') }}" alt="">
-            <h4>Eloise Rousseau</h4>
-            <p class="text-muted">Product and Research Manager</p>
-            <ul class="list-inline social-buttons">
-                <li class="list-inline-item">
-                  <a href="https://github.com/divineunited">
-                    <i class="fab fa-github"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a href="https://www.linkedin.com/in/eloise-rousseau/">
-                    <i class="fab fa-linkedin-in"></i>
-                  </a>
-                </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="team-member">
-            <img class="mx-auto rounded-circle" src="{{ url_for('static', filename='img/team/profile_edmund.jpg') }}" alt="">
-            <h4>Edmund Chan</h4>
-            <p class="text-muted">Machine Learning Engineer</p>
-            <ul class="list-inline social-buttons">
-                <li class="list-inline-item">
-                  <a href="https://github.com/divineunited">
-                    <i class="fab fa-github"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a href="https://www.linkedin.com/in/edmund-chan-3a7a5267/">
-                    <i class="fab fa-linkedin-in"></i>
-                  </a>
-                </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="team-member">
-            <img class="mx-auto rounded-circle" src="{{ url_for('static', filename='img/team/profile_leena.jpg') }}" alt="">
-            <h4>Leena Sherif</h4>
-            <p class="text-muted">Data Analytics</p>
-            <ul class="list-inline social-buttons">
-                <li class="list-inline-item">
-                  <a href="https://github.com/divineunited">
-                    <i class="fab fa-github"></i>
-                  </a>
-                </li>
-                <li class="list-inline-item">
-                  <a href="https://www.linkedin.com/in/leena-sherif-716412178/">
-                    <i class="fab fa-linkedin-in"></i>
-                  </a>
-                </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      
-    </div>
-  </section>
-
-
-
-  <!-- Contact Section -->
-  <section class="page-section" id="contact">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
-          <h2 class="mt-0">Let's Get In Touch!</h2>
-          <hr class="divider my-4">
-          <p class="text-muted mb-5">Would you like to build upon our work? Send us a message.</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-4 ml-auto text-center mb-5 mb-lg-0">
-          <i class="fas fa-phone fa-3x mb-3 text-muted"></i>
-          <div>+852 5729 3735</div>
-        </div>
-        <div class="col-lg-4 mr-auto text-center">
-          <i class="fas fa-envelope fa-3x mb-3 text-muted"></i>
-          <a class="d-block" href="mailto:danieldukevu@outlook.com">danieldukevu@outlook.com</a>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- Footer -->
   <footer class="bg-light py-5">
     <div class="container">
-      <div class="small text-center text-muted">Copyright &copy; 2019 DEEL</div>
+      <div class="small text-center text-muted">Built with Love</div>
     </div>
   </footer>
+
 
   <!-- Bootstrap core JavaScript -->
   <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
