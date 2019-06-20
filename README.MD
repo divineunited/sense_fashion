@@ -1,16 +1,36 @@
 # Sense Fashion
 
-*May 20, 2019*
+Sense Fashion is an automatic labeling system for fashion online retailers. Sense Fashion can readily identify fashion items due to its ability to label based on pre-trained generalized attributes. Specific identified attributes can further be categorized as styles of clothing where further user recommendations can be made.
 
-This fully working web application will allow a user to upload (drag and drop) images that will then be identified - specifically for fashion purposes once the ML model is fully developed and trained. 
+# Try it out here:
 
-----
+## ABOUT:
 
-Tips on Running the App from your Local Server:
-If you see this error on AWS S3 - TypeError: expected string or bytes-like object - that means that you are not getting the Bucket and authentication passed to the upload function. So, you need to get the environment variables to be passed to it because our authentication and Bucket is located in our .env files. Make sure you have python-dotenv installed in your environment requirements. To get this uploading to AWS S3, you need to get the Bucket Variables from the .env file. In order to get those authentication variables, you'll need to have a virtual environment called venv set up and installed all the requirements.txt into that virtual environment. Then, you allow the bash to source that venv by typing this in the bash: source venv/Scripts/activate
-Afterwards, the .env is setup, and you can type "flask run" to start the server with the proper environment variables passed.
+This full-stack web application allows a user to upload images that will then be identified using customized neural network models pretrained exclusively on fashion data. Sense-fashion uses a combination of 3 different customized Tensorflow models to label the clothing item and was able to achieve a higher accuracy than UCLA's [FashionNet](https://www.groundai.com/project/fashionnet-personalized-outfit-recommendation-with-deep-neural-network/1). If the image matches a specific style-set of clothing, recommendations are sent to the user along with an identified label.
 
-NOTE:
-When creating the Docker Image for deployment, a new copy of this was built up from scratch with hard coded environment variables and proper requirements / adjustments made on main.py.
+<img src="static/img/howitworks_sensefashion.png" alt="howitworks" style="width: 1500px;"/>
 
 
+
+
+## MODEL TRAINING PROCESS:
+
+#### 1. Data Preprocessing
+
+Researched the business case. Read academic papers referring us to DeepFashion data and FashionNet model. Manually cleaned folders from DeepFashion and sorted according to one feature (print, fabric, clothing type).
+
+#### 2. Model Benchmark
+
+Used VGG model pretrained on Imagenet with transfer learning; changing the output layer to include: 11 patterns, 10 fabrics and  17 clothing types. In total we used 150 images per class. 
+
+#### 3. Improving Accuracy
+
+Increased data to 1000 images per class. Classes decreased to: 9 pattern, 8 fabric, and 12 clothing items. Increased epochs and decreased learning rate until our models achieved the desired accuracy.
+
+#### 4. Finalizing Model
+
+Employ data augmentation techniques such as rotation, brightness, zoom, and size to address overfitting.  Increased accuracy to a desirable > 60%.
+
+#### 5. Comparing SenseFashion vs UCLA's FashionNet
+
+FashionNet trained exclusively on DeepFashion data and used VGG 16 algorithm. Fashion Sense had a higher accuracy due to extensive data preprocessing work.
