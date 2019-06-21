@@ -67,7 +67,7 @@
                   <img class="mx-auto rounded-circle" src="{{path}}" alt="">
                   <br>
                   <br>
-                  <h4 class="h4 mb-2">{{ prediction[0] }}, {{ prediction[1] }}, {{ prediction[2] }}</h4>
+                  <h4 class="h4 mb-2">{{ prediction[0] }} {{ prediction[1] }} {{ prediction[2] }}</h4>
                   <hr class="divider light my-4">
                     <table class="table table-striped table-bordered table-hover text-muted">
                       <tr>
@@ -87,7 +87,7 @@
                     {% if prediction[3] %}
                       <h4>Style Recommendation: {{prediction[3]}}</h4>
                     {% else %}
-                      <p class="text-muted">Sorry, I don't have a recommendation to go with this piece of clothing.</p>
+                      <br>
                     {% endif %}
                     
                   <hr class="divider light my-4">

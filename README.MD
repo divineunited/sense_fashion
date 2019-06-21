@@ -2,15 +2,13 @@
 
 Sense Fashion is an automatic labeling system for fashion online retailers deployed as a full-stack web application. Sense Fashion can readily identify fashion items due to its ability to label based on pre-trained generalized attributes. Specific identified attributes can further be categorized as styles of clothing where further user recommendations can be made.
 
-# Try it out here:
+# Try it out here: https://sensefashion.ml/
 
 ## ABOUT:
 
 This Python/Flask web application hosted on AWS using a docker container allows a user to upload images that will then be identified using customized neural network models pretrained exclusively on fashion data. Sense-fashion uses a combination of 3 different customized Tensorflow models to label the clothing item and was able to achieve a higher accuracy than UCLA's [FashionNet](https://www.groundai.com/project/fashionnet-personalized-outfit-recommendation-with-deep-neural-network/1) on certain attributes. If the image matches a specific style-set of clothing, recommendations are sent to the user along with an identified label.
 
 <img src="static/img/howitworks_sensefashion.png" alt="howitworks" style="width: 1500px;"/>
-
-
 
 
 ## MODEL TRAINING PROCESS:

@@ -3,3 +3,4 @@ venv/
 models/
 .env
 static/uploads/
+docker/
