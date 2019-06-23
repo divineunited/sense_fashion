@@ -65,7 +65,7 @@ def image_preprocess(img_path):
 
 
 def predict_images(img_paths, model, graph):
-    '''identifying images using our CNN ML model. Accepts an array of paths to uploaded images and our vgg model. Returns a dictionary / hashmap of imgpaths as keys and an array of highest predicted and percent confidence as values'''
+    '''identifying images using our CNN ML model. Accepts an array of paths to uploaded images and our vgg model and a TF Graph for thread issues. Returns a dictionary / hashmap of imgpaths as keys and an array of highest predicted and percent confidence as values'''
 
     # preprocess our images using the helper function
     image_arrays = [image_preprocess(img_path) for img_path in img_paths]
@@ -81,6 +81,7 @@ def predict_images(img_paths, model, graph):
             predictions.append(model.predict(image_array))
         # closing our TF session
         sess.close
+        # tf.reset_default_graph() # Clears the default graph stack and resets the global default graph. -- not yet tested.
 
     # Look up the names of the predicted classes. This is a function to decode the predictions based on VGG16 imagenet trained classes. It gives us 5 predictions with probabilities in order. We just want the top prediction.
     decoded_array = [vgg16.decode_predictions(prediction)[0][0] for prediction in predictions]

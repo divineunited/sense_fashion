@@ -32,3 +32,8 @@ Employ data augmentation techniques such as rotation, brightness, zoom, and size
 #### 5. Comparing SenseFashion vs UCLA's FashionNet
 
 FashionNet trained exclusively on DeepFashion data and used VGG 16 algorithm. Fashion Sense had a higher accuracy due to extensive data preprocessing work.
+
+
+
+*FUTURE UPDATES*
+- At the moment, to not have to worry about storage S3 cost, the upload folder is getting wiped out on every page reload. So if multiple users are using at the same time, there will be problems with a user deleting another user's folder.
