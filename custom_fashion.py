@@ -91,26 +91,26 @@ def predict_images(img_paths):
     image_arrays = [image_preprocess(img_path) for img_path in img_paths]
 
     # load our customized fashion pre-trained models
-    fabric = load_model(os.path.abspath(str(Path('models') / 'vgg_weights_fabric.hdf5')))
+    # fabric = load_model(os.path.abspath(str(Path('models') / 'vgg_weights_fabric.hdf5'))) # not accurate enough
     pattern = load_model(os.path.abspath(str(Path('models') / 'vgg_weights_data_aug_frozen_pattern_EI')))
     type_clothing = load_model(os.path.abspath(str(Path('models') / 'Cloth_type.hdf5')))
 
     # Run the images through the CNN models to make predictions
-    fabric_predictions = [fabric.predict_classes(image_array) for image_array in image_arrays]
+    # fabric_predictions = [fabric.predict_classes(image_array) for image_array in image_arrays]
     pattern_predictions = [pattern.predict_classes(image_array) for image_array in image_arrays]
     type_predictions = [type_clothing.predict_classes(image_array) for image_array in image_arrays]
 
     # Link up predictions to the names of the predicted classes based on definitions from our trained model:
-    class_fabric = {
-    0: 'Chiffon',
-    1: 'Cotton',
-    2: 'Denim',
-    3: 'Lace',
-    4: 'Leather',
-    5: 'Linen',
-    6: 'Ribbed',
-    7: 'Spandex',
-    }
+    # class_fabric = {
+    # 0: 'Chiffon',
+    # 1: 'Cotton',
+    # 2: 'Denim',
+    # 3: 'Lace',
+    # 4: 'Leather',
+    # 5: 'Linen',
+    # 6: 'Ribbed',
+    # 7: 'Spandex',
+    # }
 
     class_pattern = {
     0: 'Colorblock',
@@ -139,7 +139,8 @@ def predict_images(img_paths):
     11: 'Tee'
     }
 
-    fabric_predictions = [class_fabric.get(prediction[0]) for prediction in fabric_predictions]
+    # fabric_predictions = [class_fabric.get(prediction[0]) for prediction in fabric_predictions]
+    fabric_predictions = [0 for prediction in pattern_predictions] # just fill it with empty 0s
     pattern_predictions = [class_pattern.get(prediction[0]) for prediction in pattern_predictions]
     type_predictions = [class_type.get(prediction[0]) for prediction in type_predictions]
 
