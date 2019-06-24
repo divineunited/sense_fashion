@@ -55,12 +55,17 @@ dropzone = Dropzone(app)
 
 
 ###### Loading our Models:
-# Load Keras' VGG16 model that was pre-trained against the ImageNet database
-model_vgg = vgg16.VGG16()
-# creating a TF default graph that helps with threading issues: https://github.com/tensorflow/tensorflow/issues/14356#issuecomment-389606499
-graph = tf.get_default_graph()
 
-# load our customized fashion pre-trained models -- preloading these models does not work ATM.
+#### Trying to load the VGG model beforehand works well in testing, but NOT deployed in production. After a couple days, running the VGG model gives us this error: tensorflow.python.framework.errors_impl.FailedPreconditionError: Attempting to use uninitialized value block1_conv1/kernel         [[{{node block1_conv1/kernel/read}}]]
+    # It works well in testing though... Uncomment the code, send the model and graph through to the function to get it back online
+# Load Keras' VGG16 model that was pre-trained against the ImageNet database
+# model_vgg = vgg16.VGG16()
+# creating a TF default graph that helps with threading issues: https://github.com/tensorflow/tensorflow/issues/14356#issuecomment-389606499
+# graph = tf.get_default_graph()
+
+
+
+# load our customized fashion pre-trained models -- preloading and sending 3 different models does not work in prototype
 # fabric = load_model(os.path.abspath(str(Path('models') / 'vgg_weights_fabric.hdf5')))
 # fabric._make_predict_function()
 # graph_fab = tf.get_default_graph()
@@ -154,7 +159,7 @@ def result():
     p = Path('static') / 'uploads' / sdirectory # the relative path of where our files are temp locally stored - defined as p
     filepaths = [x for x in p.iterdir() if x.is_file()] # getting filename paths
     
-    paths_predictions = custom_vgg.predict_images(filepaths, model_vgg, graph)
+    paths_predictions = custom_vgg.predict_images(filepaths)
 
     return render_template("result.html", paths_predictions = paths_predictions)
 
