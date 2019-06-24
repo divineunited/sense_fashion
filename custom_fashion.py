@@ -31,71 +31,54 @@ def image_preprocess(img_path):
 
 
 def recommend_style(arr):
-    '''Accepts an array of 0-3 strings describing the clothing. Matches it up with a possible style based on our hard-coded dictionary and appends it to the array. Returns appended array.'''
-    style = {'plain, shirt': 'the_office',
-            'plain, blouse': 'the_office',
-             'plain, sweater':'the_office',
-             'plain, dress': 'the_office',
-             'plain, blazer': 'the_office',
-             'plain, skirt': 'the_office',
-            'cotton, dot, dress': 'nautical',
-           'cotton, dot, cardigan': 'nautical',
-           'cotton, dot, blouse': 'nautical',
-           'cotton, stripe, dress': 'nautical',
-           'cotton, stripe, cardigan': 'nautical',
-           'cotton, stripe, blouse': 'nautical',
-           'linen, dot, dress': 'nautical',
-           'linen, dot, cardigan': 'nautical',
-           'linen, dot, blouse': 'nautical',
-           'linen, stripe, dress': 'nautical',
-           'linen, stripe, cardigan': 'nautical',
-           'linen, stripe, blouse': 'nautical',
-           'lace, dot, dress': 'nautical',
-           'lace, dot, cardigan': 'nautical',
-           'lace, dot, blouse': 'nautical',
-           'lace, stripe, dress': 'nautical',
-           'lace, stripe, cardigan': 'nautical',
-           'lace, stripe, blouse': 'nautical',
-            'palm, shorts': 'by_the_beach',
-            'palm, tank': 'by_the_beach',
-            'palm, tee' :'by_the_beach',
-            'palm, romper': 'by_the_beach',
-            'floral, shorts': 'by_the_beach',
-            'floral, tank': 'by_the_beach',
-            'floral, tee' :'by_the_beach', 
-            'floral, romper': 'by_the_beach',
-             'cotton, colorblock, tank': 'street_style',
-            'denim, graphic, tee': 'street_style',
-                'denim, graphic, jeans': 'street_style',
-                'denim, graphic, jacket': 'street_style',
-                'denim, graphic, hoodie': 'street_style',
-                'leather, graphic, tee': 'street_style',
-                'leather, graphic, jeans': 'street_style',
-                'leather, graphic, jacket': 'street_style',
-                'leather, graphic, hoodie': 'street_style',
-                'spandex, colorblock, legging': 'athlesiure',
-             'spandex, colorblock, exercise_shorts': 'athelesiure',
-             'spandex, colorblock, tee': 'athelesiure',
-             'spandex, colorblock, sweatpants' : 'athelesiure',
-             'spandex, colorblock, hoodie': 'athelesiure',
-            'lace, stripe, shirt': 'night_out',
-             'lace, stripe, skirt': 'night_out',
-             'lace, stripe, jeans': 'night_out',
-              'lace, plain, dress': 'night_out',
-            'chiffon, paisley, dress': 'festival',
-           'chiffon, zig_zag, dress': 'festival',
-           'chiffon, distressed, dress': 'festival',
-             'cotton, plain, shorts': 'festival'
-    }
+    clothing = arr[2]
+    pattern = arr[1]
 
-    attr_cloth = []
-    attr_cloth.append(arr[0].lower())
-    attr_cloth.append(arr[1].lower())
-    attr_cloth.append(arr[2].lower())
-    attr_cloth = tuple(attr_cloth)
-    attr_cloth = ', '.join(attr_cloth)
-
-    return arr.append(style.get(attr_cloth, None))
+    # smart / office Styles:
+    if clothing in ['Blazer']:
+        return arr.append('smart_blazer') # recommend things that go well with blazer
+    elif clothing in ['Blouse', 'Cardigan']:
+        return arr.append('smart_blouse_cardigan')
+    elif clothing in ['Skirt'] and pattern in ['Plain']:
+        return arr.append('smart_skirt')
+    # nautical styles:
+    elif clothing in ['Dress', 'Skirt'] and pattern in ['Dot', 'Stripe']:
+        return arr.append('nautical_dress_skirt')
+    elif clothing in ['Shorts'] and pattern in ['Dot', 'Plain', 'Stripe']:
+        return arr.append('nautical_shorts_tee')
+    elif clothing in ['Tee'] and pattern in ['Dot', 'Stripe']:
+        return arr.append('nautical_shorts_tee')
+    # beach styles:
+    elif pattern in ['Floral']:
+        return arr.append('beach_floral')
+    elif clothing in ['Tank']:
+        return arr.append('beach_tank')
+    elif clothing in ['Tee'] and pattern in ['Colorblock', 'Distressed', 'Paisley', 'Plaid']:
+        return arr.append('beach_tee')
+    elif clothing in ['Romper'] and pattern in ['Dot', 'Stripe', 'Floral']:
+        return arr.append('beach_romper')
+    elif clothing in ['Shorts'] and pattern in ['Colorblock', 'Distressed', 'Paisley', 'Plaid']:
+        return arr.append('beach_shorts')
+    # athleasure styles:
+    elif clothing in ['Exercise shorts']:
+        return arr.append('athleasure_shorts')
+    elif clothing in ['Hoodie']:
+        return arr.append('athleasure_hoodie')
+    elif clothing in ['Tee'] and pattern in ['Plain']:
+        return arr.append('athleasure_tee')
+    # night_out styles:
+    elif clothing in ['Dress', 'Skirt'] and pattern in ['Colorblock', 'Distressed', 'Paisley', 'Plaid', 'Plain']:
+        return arr.append('night_out_dress_skirt')
+    elif clothing in ['Romper'] and pattern in ['Colorblock', 'Distressed', 'Paisley', 'Plaid', 'Plain']:
+        return arr.append('night_out_romper')
+    # street styles:
+    elif clothing in ['Jeans']:
+        return arr.append('street_jeans')
+    elif pattern in ['Graphic']:
+        return arr.append('street_graphic_pattern')
+    # eclectic style (undefined)
+    else:
+        return arr.append('eclectic')
 
 
 def predict_images(img_paths):
@@ -126,7 +109,7 @@ def predict_images(img_paths):
     4: 'Leather',
     5: 'Linen',
     6: 'Ribbed',
-    7: 'Spandez',
+    7: 'Spandex',
     }
 
     class_pattern = {
