@@ -81,7 +81,7 @@ def predict_images(img_paths, model, graph):
             predictions.append(model.predict(image_array))
         # closing our TF session
         sess.close
-        # tf.reset_default_graph() # Clears the default graph stack and resets the global default graph. -- not yet tested.
+        tf.reset_default_graph() # Clears the default graph stack and resets the global default graph.
 
     # Look up the names of the predicted classes. This is a function to decode the predictions based on VGG16 imagenet trained classes. It gives us 5 predictions with probabilities in order. We just want the top prediction.
     decoded_array = [vgg16.decode_predictions(prediction)[0][0] for prediction in predictions]
