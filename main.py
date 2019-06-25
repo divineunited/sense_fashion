@@ -184,6 +184,10 @@ def fashion():
         # progress bar: https://stackoverflow.com/questions/24251898/flask-app-update-progress-bar-while-function-runs
     paths_predictions = custom_fashion.predict_images(filepaths)
 
+    # What is the contents of paths_predictions? 
+        # [0] -> fabric, [1] -> pattern, [2] -> clothing_type, [3] -> style category, [4][0] [4][1] [4][2] [4][3] = recommendation imagepaths, [5][0] [5][1] [5][2] [5][3] -> recommendation image filenames
+    # print(paths_predictions)
+
     return render_template("fashion.html", paths_predictions = paths_predictions)
 
 

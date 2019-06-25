@@ -10764,7 +10764,6 @@ header.masthead h1 {
 
 .team-member img {
   width: 225px;
-  height: 225px;
   border: 7px solid #fff;
 }
 
@@ -10797,4 +10796,24 @@ header.masthead h1 {
 
 .uploaded p {
   margin-top: 0;
+}
+
+
+#fancybox img.zoom {
+  width: 100%;
+  height: 200px;
+  border-radius:5px;
+  object-fit:cover;
+  -webkit-transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
+  -ms-transition: all .3s ease-in-out;
+}
+      
+
+#fancybox .transition {
+  -webkit-transform: scale(1.2); 
+  -moz-transform: scale(1.2);
+  -o-transform: scale(1.2);
+  transform: scale(1.2);
 }

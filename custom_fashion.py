@@ -9,6 +9,7 @@ from keras import backend as K
 # common imports for dealing with model path:
 import os
 from pathlib import Path
+import random
 
 
 def image_preprocess(img_path):
@@ -30,7 +31,8 @@ def image_preprocess(img_path):
     return image_array
 
 
-def recommend_style(arr):
+def get_style(arr):
+    '''This helper function accepts an array of 3 labels (fabric, pattern, clothing) and uses clothing and pattern to define a style of clothing which will then be used to generate random image recommendations from our static img styles folder.'''
     clothing = arr[2]
     pattern = arr[1]
 
@@ -52,25 +54,25 @@ def recommend_style(arr):
     elif pattern in ['Floral']:
         return arr.append('beach_floral')
     elif clothing in ['Tank']:
-        return arr.append('beach_tank')
+        return arr.append('beach_tank_tee')
     elif clothing in ['Tee'] and pattern in ['Colorblock', 'Distressed', 'Paisley', 'Plaid']:
-        return arr.append('beach_tee')
+        return arr.append('beach_tank_tee')
     elif clothing in ['Romper'] and pattern in ['Dot', 'Stripe', 'Floral']:
         return arr.append('beach_romper')
     elif clothing in ['Shorts'] and pattern in ['Colorblock', 'Distressed', 'Paisley', 'Plaid']:
         return arr.append('beach_shorts')
     # athleasure styles:
     elif clothing in ['Exercise shorts']:
-        return arr.append('athleasure_shorts')
+        return arr.append('athleasure')
     elif clothing in ['Hoodie']:
-        return arr.append('athleasure_hoodie')
+        return arr.append('athleasure')
     elif clothing in ['Tee'] and pattern in ['Plain']:
-        return arr.append('athleasure_tee')
+        return arr.append('athleasure')
     # night_out styles:
     elif clothing in ['Dress', 'Skirt'] and pattern in ['Colorblock', 'Distressed', 'Paisley', 'Plaid', 'Plain']:
-        return arr.append('night_out_dress_skirt')
+        return arr.append('night_out_female')
     elif clothing in ['Romper'] and pattern in ['Colorblock', 'Distressed', 'Paisley', 'Plaid', 'Plain']:
-        return arr.append('night_out_romper')
+        return arr.append('night_out_female')
     # street styles:
     elif clothing in ['Jeans']:
         return arr.append('street_jeans')
@@ -80,6 +82,20 @@ def recommend_style(arr):
     else:
         return arr.append('eclectic')
 
+def get_recommendations(arr, n=4):
+    '''This function accepts a prediction array with a style at position 3 that has a corresponding system folder and then chooses n number of random images from that folder and appends that list to the original array along with a list of corresponding filenames.'''
+
+    style = arr[3]
+    p = Path('static') / 'img' / 'styles' / style
+    filepaths = [x for x in p.iterdir() if x.is_file()]
+    filepaths = random.sample(filepaths, n) # create a list of n random image filepaths
+    filenames = [filepath.stem for filepath in filepaths] # create another list of the corresponding filenames without extension
+
+    # appending each list to the array (adding 2 items of n length)
+    arr.append(filepaths)
+    arr.append(filenames)
+
+    return arr
 
 def predict_images(img_paths):
     '''identifying images using our CNN ML model. Accepts an array of paths to uploaded images. Returns a dictionary / hashmap of imgpaths as keys and an array of highest predicted and percent confidence as values'''
@@ -147,15 +163,18 @@ def predict_images(img_paths):
     # getting our final dictionary of image_paths as keys and 3 predictions as a list as values
     path_pred = {img_path : [fabric_prediction, pattern_prediction, type_prediction] for img_path, fabric_prediction, pattern_prediction, type_prediction in zip(img_paths, fabric_predictions, pattern_predictions, type_predictions)}
 
-    # appending a recommendation to our prediction using helper function
+    # appending a style to our prediction using helper function:
     for arr in path_pred.values():
-        arr = recommend_style(arr)
+        arr = get_style(arr)
+
+    # appending n recommendations to our prediction using helper function
+    for arr in path_pred.values():
+        arr = get_recommendations(arr, 4)
 
     # clearing backend keras session after prediction was complete:
     K.clear_session()
 
     return path_pred
-    
 
 
 # testing function:

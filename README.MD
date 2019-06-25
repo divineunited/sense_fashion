@@ -1,6 +1,6 @@
 # Sense Fashion
 
-Sense Fashion is an automatic labeling system for fashion online retailers deployed as a full-stack web application. Sense Fashion can readily identify fashion items due to its ability to label based on pre-trained generalized attributes. Specific identified attributes can further be categorized as styles of clothing where further user recommendations can be made.
+Combining fashion and machine learning, Sense Fashion is an automatic labeling system for fashion online retailers deployed as a full-stack web application. Sense Fashion can readily identify fashion items due to its ability to label based on pre-trained generalized attributes. Specific identified attributes can further be categorized as styles of clothing where further user recommendations can be made. Bonus feature to identify any generic image is also available using VGG16 trained on ImageNet.
 
 # Try it out here: https://sensefashion.ml/
 
@@ -36,4 +36,4 @@ FashionNet trained exclusively on DeepFashion data and used the VGG 16 algorithm
 
 
 *FUTURE UPDATES*
-- At the moment, to not have to worry about storage S3 cost, the upload folder is getting wiped out on every page reload. So if multiple users are using at the same time, there will be problems with a user deleting another user's folder.
+- At the moment, to not have to worry about Amazon Web Services S3 storage and utilization cost, the upload folder is getting wiped out on every page reload. So if many users are using the app at the same time, you might get server errors. If so, please just try again. 
