@@ -2,7 +2,14 @@
 
 Combining fashion and machine learning, Sense Fashion is an automatic labeling system for fashion online retailers deployed as a full-stack web application. Sense Fashion can readily identify fashion items due to its ability to label based on pre-trained generalized attributes. Specific identified attributes can further be categorized as styles of clothing where further user recommendations can be made. Bonus feature to identify any generic image is also available using VGG16 trained on ImageNet.
 
-# Try it out here: https://sensefashion.ml/
+### DOCKER URL: https://cloud.docker.com/repository/docker/divineunited/sensefashionv14/general
+
+Run this on your own docker-machine instance: `docker run -p 5000:5000 divineunited/sensefashionv14`
+
+### WEB URL: https://sensefashion.ml/
+
+*Note, this link might not work since the AWS instance I'm hosting this on is not free-tier and incurs charges.*
+
 
 ## ABOUT:
 
