@@ -10,7 +10,7 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
-:root {
+ :root {
   --blue: #007bff;
   --indigo: #6610f2;
   --purple: #6f42c1;
@@ -10779,7 +10779,6 @@ header.masthead h1 {
 
 
 .uploaded {
-  margin-bottom: 50px;
   text-align: center;
 }
 
@@ -10788,32 +10787,9 @@ header.masthead h1 {
   border: 4px solid #fff;
 }
 
-.uploaded h4 {
-  margin-top: 25px;
-  margin-bottom: 0;
-  text-transform: none;
-}
 
-.uploaded p {
-  margin-top: 0;
-}
-
-
-#fancybox img.zoom {
+.fancybox img {
   width: 100%;
   height: 200px;
-  border-radius:5px;
-  object-fit:cover;
-  -webkit-transition: all .3s ease-in-out;
-  -moz-transition: all .3s ease-in-out;
-  -o-transition: all .3s ease-in-out;
-  -ms-transition: all .3s ease-in-out;
-}
-      
-
-#fancybox .transition {
-  -webkit-transform: scale(1.2); 
-  -moz-transform: scale(1.2);
-  -o-transform: scale(1.2);
-  transform: scale(1.2);
+  object-fit: cover;
 }

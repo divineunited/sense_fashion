@@ -58,82 +58,57 @@
 
   <!-- Sense Section -->
   <section class="page-section bg-primary" id="sense">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8 text-center">
-              <div class="uploaded">
+        <div class="text-center">
 
                 {% for path, prediction in paths_predictions.items() %}
-                  <img class="mx-auto rounded-circle img-fluid" src="{{path}}" alt="">
-                  <br>
-                  <br>
-                  <h4 class="h2 mb-2">{{ prediction[1] }} {{ prediction[2] }}</h2>
-                  <hr class="divider light my-4">
-                  <p class="text-white">Style Recommendations</p>
-                 
-                 
-                  <div class="row">
+                <div class="row justify-content-center">
+                  <div class='uploaded'>
 
-                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                        <a href="https://www.google.com/search?q={{prediction[5][0]}}&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjJ29P1k4TjAhWIP3AKHTnLD4QQ_AUIECgB&biw=1920&bih=888&dpr=1" target="_blank" class="fancybox">
-                            <img src="{{prediction[4][0]}}" class="zoom img-fluid"  alt="">
-                        </a>
-                    </div>
+                    <img class="mx-auto rounded-circle img-fluid" src="{{path}}" alt="">
+                    <br>
+                    <p class="pt-4 text-white">Detected Image</p>
+                    <h4>{{ prediction[1] }} {{ prediction[2] }}</h4>
 
-                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                        <a href="https://www.google.com/search?q={{prediction[5][1]}}&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjJ29P1k4TjAhWIP3AKHTnLD4QQ_AUIECgB&biw=1920&bih=888&dpr=1" target="_blank" class="fancybox">
-                            <img src="{{prediction[4][1]}}" class="zoom img-fluid"  alt="">
-                        </a>
-                    </div>
-                    
-                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                        <a href="https://www.google.com/search?q={{prediction[5][2]}}&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjJ29P1k4TjAhWIP3AKHTnLD4QQ_AUIECgB&biw=1920&bih=888&dpr=1" target="_blank" class="fancybox">
-                            <img src="{{prediction[4][2]}}" class="zoom img-fluid"  alt="">
-                        </a>
-                    </div>
-                    
-                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                        <a href="https://www.google.com/search?q={{prediction[5][3]}}&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjJ29P1k4TjAhWIP3AKHTnLD4QQ_AUIECgB&biw=1920&bih=888&dpr=1" target="_blank" class="fancybox">
-                            <img src="{{prediction[4][3]}}" class="zoom img-fluid"  alt="">
-                        </a>
-                    </div>
-
+                  </div>
                 </div>
+                
+                <br>
+                <p class="pt-8 text-white">Style Recommendations</p>
+                
+                <div class="row justify-content-center">
+                    <div class="col-xs-3 fancybox">
+                        <a href="https://www.google.com/search?q={{prediction[5][0]}}&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjJ29P1k4TjAhWIP3AKHTnLD4QQ_AUIECgB&biw=1920&bih=888&dpr=1" target="_blank">
+                            <img src="{{prediction[4][0]}}" alt="">
+                        </a>
+                    </div>
 
-
-<!--                   
-                    <table class="table table-striped table-bordered table-hover text-muted">
-                      <tr>
-                        <th>Detected Fabric</th>
-                        <th>Detected Pattern</th>
-                        <th>Detected Clothing Type</th>
-                      </tr>
-                      
-                      <tr>
-                        <td>{{ prediction[0] }}</td>
-                        <td>{{ prediction[1] }}</td>
-                        <td>{{ prediction[2] }}</td>
-                      </tr>
-                      
-                    </table> 
-
-                    {% if prediction[3] %}
-                      <h4>Style Recommendation: {{prediction[3]}}</h4>
-                    {% else %}
-                      <br>
-                    {% endif %}
+                    <div class="col-xs-3 fancybox">
+                        <a href="https://www.google.com/search?q={{prediction[5][1]}}&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjJ29P1k4TjAhWIP3AKHTnLD4QQ_AUIECgB&biw=1920&bih=888&dpr=1" target="_blank">
+                            <img src="{{prediction[4][1]}}" alt="">
+                        </a>
+                    </div>
                     
-                  -->
+                    <div class="col-xs-3 fancybox">
+                        <a href="https://www.google.com/search?q={{prediction[5][2]}}&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjJ29P1k4TjAhWIP3AKHTnLD4QQ_AUIECgB&biw=1920&bih=888&dpr=1" target="_blank">
+                            <img src="{{prediction[4][2]}}" alt="">
+                        </a>
+                    </div>
+                    
+                    <div class="col-xs-3 fancybox">
+                        <a href="https://www.google.com/search?q={{prediction[5][3]}}&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjJ29P1k4TjAhWIP3AKHTnLD4QQ_AUIECgB&biw=1920&bih=888&dpr=1" target="_blank">
+                            <img src="{{prediction[4][3]}}" alt="">
+                        </a>
+                    </div>
+                </div>
+                
+                <br><br>
+                <hr class="divider light my-8">
+                <br><br>
 
-                  <hr class="divider light my-4">
-                  <br>
                 {% endfor %}
 
-              </div>
               <a class="btn btn-secondary btn-xl js-scroll-trigger" href="{{ url_for('index', _anchor='sense') }}">Try Again</a>
-        </div>
-      </div>
-    </div>
+      </div> 
   </section>
 
 
